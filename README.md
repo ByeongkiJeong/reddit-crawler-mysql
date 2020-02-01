@@ -41,6 +41,7 @@ optional arguments:
                         Default:
   -H HOST, --host HOST  MySQL host. Default: localhost
   -u USER, --user USER  MySQL username. Default: 
+  -w PASSWORD, --passwd  MySQL password. Default: 
   -s SUBREDDIT, --subreddit SUBREDDIT
                         Name of subreddit to search. Default: Python
   -p PAGES, --pages PAGES
@@ -48,6 +49,6 @@ optional arguments:
 ```
 
 ## Dependencies
-- [MySQLdb](http://mysql-python.sourceforge.net/MySQLdb.html)
+- [pymysql](https://github.com/PyMySQL/PyMySQL)
 - argparse
 - requests

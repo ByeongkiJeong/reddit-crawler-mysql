@@ -1,5 +1,5 @@
-import MySQLdb, getpass
-from defaults import DATABASE_DIR, DEFAULT_HOST, DEFAULT_USER, DEF_LIMIT
+import pymysql, getpass
+from defaults import DATABASE_DIR, DEFAULT_HOST, DEFAULT_USER, DEF_LIMIT, DEFAULT_PW
 
 class MySQLDatabase(object):
     """Generic class for creating and writing to MySQL databases
@@ -20,18 +20,20 @@ class MySQLDatabase(object):
     MySQLDatabase object
     """
     
-    def __init__(self, db_name, table, host=DEFAULT_HOST, user=DEFAULT_USER):
+    def __init__(self, db_name, table, host=DEFAULT_HOST, user=DEFAULT_USER, passwd=DEFAULT_PW):
         self.db_name = db_name
         self.table = table
         self.host = host
         self.user = user
-        self.connection = self.get_db_connection(db_name, host, user)
+        self.passwd = passwd
+        self.connection = self.get_db_connection(db_name, host, user, passwd)
 
-    def get_db_connection(self, db_name, host, user):
-        return MySQLdb.connect (
+    def get_db_connection(self, db_name, host, user, passwd):
+        return pymysql.connect (
                     host = host,
                     user = user,
                     db = db_name,
+                    passwd = passwd,
                     charset = 'utf8mb4',
                     use_unicode = True, 
                     read_default_file = "~/.my.cnf"

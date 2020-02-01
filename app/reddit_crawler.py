@@ -1,6 +1,6 @@
 import requests, sys, argparse
 from mysql_db import MySQLDatabase
-from defaults import BASE_URL, DEFAULT_DB, DEFAULT_HOST, DEFAULT_USER, DEFAULT_SUB_REDDIT, DEFAULT_PAGES, DEFAULT_TABLE_PREFIX
+from defaults import BASE_URL, DEFAULT_DB, DEFAULT_HOST, DEFAULT_USER, DEFAULT_SUB_REDDIT, DEFAULT_PAGES, DEFAULT_TABLE_PREFIX, DEFAULT_PW
 
 usernames = set()
 
@@ -129,7 +129,7 @@ def get_user_posts(username):
         data = request_reddit_data(url_params)['data']
 
         user_submissions = data['children']
-        all_submissions.append(user_submissions)
+        all_user_submissions.append(user_submissions)
 
     return all_user_submissions
 
@@ -160,11 +160,12 @@ if __name__ == '__main__':
         help='MySQL host. Default: %s' % (DEFAULT_HOST))
     parser.add_argument('-u', '--user', dest='user', default=DEFAULT_USER, 
         help='MySQL username. Default: %s' % (DEFAULT_USER))
+    parser.add_argument('-w', '--passwd', dest='password', default=DEFAULT_PW,
+        help='MySQL password: %s' % (DEFAULT_PW))
     parser.add_argument('-s', '--subreddit', dest='subreddit', default=DEFAULT_SUB_REDDIT, 
         help='Name of subreddit to search. Default: %s' % (DEFAULT_SUB_REDDIT))
     parser.add_argument('-p', '--pages', dest='pages', default=DEFAULT_PAGES, type=int,
         help='Number of pages to search. Default: %s' % (DEFAULT_PAGES))
-
     args = parser.parse_args()
 
     if not args.db_name:
@@ -179,7 +180,7 @@ if __name__ == '__main__':
         print("Table prefix set to %s" % args.subreddit.lower())
         args.table_prefix = args.subreddit.lower()
 
-    db = MySQLDatabase(db_name=args.db_name, table=args.table_prefix, host=args.host, user=args.user)
+    db = MySQLDatabase(db_name=args.db_name, table=args.table_prefix, host=args.host, user=args.user, passwd=args.password)
     db.create_schema_db()
 
     get_subreddit_pages(args.subreddit, int(args.pages))

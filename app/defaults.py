@@ -11,6 +11,7 @@ DEFAULT_DB = ''
 DEFAULT_TABLE_PREFIX = ''
 DEFAULT_HOST = 'localhost'
 DEFAULT_USER = getpass.getuser()
+DEFAULT_PW = ''
 
 # other
 DEF_LIMIT = 10

@@ -12,3 +12,4 @@ urllib3==1.21.1
 wsgiref==0.1.2
 mysqlclient
 argparse
+pymysql
